@@ -74,7 +74,7 @@ and documented rather than validated, so keep them well-formed YAML.
 | `port` | First port to try (default `8765`; walks up to 50 ports). |
 | `dataDir` | Server data directory (default `~/.dsh-vscode-web/server`). |
 | `extraArgs` | Extra `serve-web` arguments, as a string array. |
-| `settings` | Object merged into the server's machine settings (`<dataDir>/data/Machine/settings.json`) on every start. Use it for workbench settings that must survive a restart, another browser, or a port change — the web workbench keeps its "User" settings in browser-local storage, which does not. |
+| `settings` | Object merged over the built-in defaults (`security.workspace.trust.enabled: false`, `banner`/`startupPrompt`: `never`) into the server's machine settings (`<dataDir>/data/Machine/settings.json`) on every start. Keys set here win; keys VS Code itself added are preserved. Use it for workbench settings that must survive a restart, another browser, or a port change — the web workbench keeps its "User" settings in browser-local storage, which does not. |
 
 ```yaml
 - id: dsh-vscode-web

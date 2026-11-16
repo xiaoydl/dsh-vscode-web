@@ -40,6 +40,18 @@ const BODY_LIMIT_BYTES = 64 * 1024
 const EXTENSION_DIR = 'dsh-bridge'
 /** Extension identity VS Code uses in `extensions.json`. */
 const EXTENSION_ID = 'dsh.dsh-bridge'
+/**
+ * Workbench settings this plugin always wants, independent of any profile
+ * patch: the embedded workbench is a local tool for this machine's own
+ * workspace, so VS Code's workspace-trust gate only gets in the way. A row
+ * `settings` object overrides these keys.
+ */
+const DEFAULT_SETTINGS = {
+  'security.workspace.trust.enabled': false,
+  'security.workspace.trust.banner': 'never',
+  'security.workspace.trust.startupPrompt': 'never',
+}
+
 /** Keep-alive cadence of the bridge event stream. */
 const HEARTBEAT_MS = 25_000
 
@@ -450,6 +462,13 @@ class VscodeWebServer {
     }
   }
 
+  /** Built-in settings with the row's own `settings` on top. */
+  resolvedSettings() {
+    const configured = this.config.settings
+    const extra = configured !== null && typeof configured === 'object' && !Array.isArray(configured) ? configured : {}
+    return { ...DEFAULT_SETTINGS, ...extra }
+  }
+
   /** Directory holding the server's own data (cookies, workspace state). */
   dataDir() {
     const configured = typeof this.config.dataDir === 'string' ? this.config.dataDir.trim() : ''
@@ -535,7 +554,7 @@ class VscodeWebServer {
       }
     }
     try {
-      applyServerSettings(dataDir, this.config.settings)
+      applyServerSettings(dataDir, this.resolvedSettings())
     } catch {
       // Same.
     }
@@ -594,7 +613,7 @@ class VscodeWebServer {
 
     // Machine settings must exist before the window loads them.
     try {
-      applyServerSettings(dataDir, this.config.settings)
+      applyServerSettings(dataDir, this.resolvedSettings())
     } catch (error) {
       console.warn('[dsh-vscode-web] settings could not be written:', error)
     }
