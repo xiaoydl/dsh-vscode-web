@@ -1,0 +1,44 @@
+{
+  "name": "dsh-bridge",
+  "publisher": "dsh",
+  "displayName": "DSH bridge",
+  "description": "Send the current selection or file from VS Code to a DeepSeek Harness session.",
+  "version": "0.1.0",
+  "engines": { "vscode": "^1.82.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true,
+      "description": "Reads the current editor selection and posts it to the DeepSeek Harness host on this machine."
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "dsh.sendSelection",
+        "title": "Send selection to DSH session",
+        "category": "DSH"
+      },
+      {
+        "command": "dsh.sendFile",
+        "title": "Add this file to DSH session",
+        "category": "DSH"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "dsh.sendSelection",
+          "when": "editorHasSelection",
+          "group": "navigation@90"
+        },
+        {
+          "command": "dsh.sendFile",
+          "group": "navigation@91"
+        }
+      ]
+    }
+  }
+}

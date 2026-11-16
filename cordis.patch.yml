@@ -1,0 +1,6 @@
+# The dsh-vscode-web bundle: one Host row that owns the VS Code web server
+# process and its fenced HTTP routes, plus one Client module that paints the
+# sidebar rows and the conversation-header button calling those routes.
+- insert:
+    - id: dsh-vscode-web
+      name: 'dsh-vscode-web'

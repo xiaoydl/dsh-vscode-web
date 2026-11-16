@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "VS Code Web",
+    "description": "Open this session's workspace in the web server that ships with the local VS Code install. Two entry points: the window-with-brackets button that appears when you hover a session row in the sidebar, and the same button in the conversation's top-right toolbar. The first click starts `code serve-web`; one server serves the whole DSH process and the workspace is selected with the `?folder=` parameter. On the very first run VS Code prepares its web-server runtime under `~/.vscode/cli/serve-web`; once that exists, startup is immediate. On DSH Desktop the workbench opens in a right-sidebar Browser tab; elsewhere it opens in a new browser tab. The editor, terminal, Git and debugging come from the local VS Code install; extensions are loaded by that web server's own extension host and are not the ones installed in the desktop app. Requires VS Code with its CLI (the shipped `code-tunnel.exe` on Windows, the `code` launcher elsewhere). The server listens on 127.0.0.1 and, by default, runs with `--without-connection-token`, so any local process that can reach the port also reaches the workbench and its integrated terminal; set `command`, `port`, `dataDir` or `extraArgs` on the plugin row to change that. In VS Code, the editor context menu gains two commands: send the selection as a quote into the current draft, or insert the current file as an @ reference. Disabling the plugin or restarting DSH ends the server it started.",
+    "detail": "docs/DETAIL.md"
+  }
+}
